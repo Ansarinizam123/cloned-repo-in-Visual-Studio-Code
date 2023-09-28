@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 function App() {
   const [imageUrl, setImageUrl] = useState('');
-  
+  const [loadedImage, setLoadedImage] = useState(null);
+
   const handleAnalyzeClick = () => {
     // Code to trigger image analysis goes here
     console.log("Image analysis triggered with URL: " + imageUrl);
@@ -11,6 +12,21 @@ function App() {
   const handleGenerateClick = () => {
     // Code to trigger image generation goes here
     console.log("Image generation triggered with prompt: " + imageUrl);
+  };
+
+  const handleFetchImageClick = () => {
+    // Fetch the image using the provided URL
+    if (imageUrl) {
+      fetch(imageUrl)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          setLoadedImage(url);
+        })
+        .catch((error) => {
+          console.error("Error fetching image:", error);
+        });
+    }
   };
 
   return (
@@ -27,6 +43,15 @@ function App() {
       />
       <button onClick={handleAnalyzeClick}>Analyze Image</button>
       <button onClick={handleGenerateClick}>Generate Image</button>
+      <button onClick={handleFetchImageClick}>Fetch Image</button>
+
+      {/* Display the fetched image */}
+      {loadedImage && (
+        <div>
+          <h2>Fetched Image</h2>
+          <img src={loadedImage} alt="Fetched" style={{ maxWidth: '100%' }} />
+        </div>
+      )}
     </div>
   );
 }
