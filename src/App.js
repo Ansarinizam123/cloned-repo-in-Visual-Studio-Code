@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function App() {
- const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   
   const handleAnalyzeClick = () => {
     // Code to trigger image analysis goes here
@@ -29,8 +29,6 @@ function App() {
       <button onClick={handleGenerateClick}>Generate Image</button>
     </div>
   );
-}
-
 }
 
 export default App;
